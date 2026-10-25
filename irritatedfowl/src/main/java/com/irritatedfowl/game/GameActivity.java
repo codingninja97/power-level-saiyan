@@ -9,6 +9,7 @@ import java.util.*;
 public class GameActivity extends Activity {
     @Override public void onCreate(Bundle b) { super.onCreate(b); getWindow().getDecorView().setSystemUiVisibility(5894 | 1024 | 512); setContentView(new GameView()); }
 
+    // Non-static inner view so it can safely access its enclosing Activity.
     class GameView extends View {
         final Paint p = new Paint(3);
         final Random random = new Random();
