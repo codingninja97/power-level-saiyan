@@ -30,6 +30,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
+      - name: Verify corrected game constructor
+        run: grep -nE 'new GameView\(this\)|GameView\(Context context\)' irritatedfowl/src/main/java/com/irritatedfowl/game/GameActivity.java
       - name: Build Irritated Fowl APK
         run: gradle :irritatedfowl:assembleDebug
       - name: Upload Irritated Fowl APK
