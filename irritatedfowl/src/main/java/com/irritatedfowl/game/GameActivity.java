@@ -2,12 +2,13 @@ package com.irritatedfowl.game;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.content.Context;
 import android.graphics.*;
 import android.view.*;
 import java.util.*;
 
 public class GameActivity extends Activity {
-    @Override public void onCreate(Bundle b) { super.onCreate(b); getWindow().getDecorView().setSystemUiVisibility(5894 | 1024 | 512); setContentView(new GameView()); }
+    @Override public void onCreate(Bundle b) { super.onCreate(b); getWindow().getDecorView().setSystemUiVisibility(5894 | 1024 | 512); setContentView(new GameView(this)); }
 
     // Non-static inner view so it can safely access its enclosing Activity.
     class GameView extends View {
@@ -23,7 +24,7 @@ public class GameActivity extends Activity {
         final float ground=435;
         class Body { float x,y,w,h,vx,vy; int kind; boolean alive=true; Body(float X,float Y,float W,float H,int K){x=X;y=Y;w=W;h=H;kind=K;} }
 
-        GameView() { super(GameActivity.this); setLayerType(View.LAYER_TYPE_SOFTWARE,null); setupLevel(); }
+        GameView(Context context) { super(context); setLayerType(View.LAYER_TYPE_SOFTWARE,null); setupLevel(); }
         void setupLevel() {
             bodies.clear(); won=false; flying=false; birds=3; birdX=slingX; birdY=slingY;
             int base=level%3;
