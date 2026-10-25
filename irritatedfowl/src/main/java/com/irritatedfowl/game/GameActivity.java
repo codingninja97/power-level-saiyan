@@ -63,7 +63,7 @@ public class GameActivity extends Activity {
             if(flying) { long now=System.currentTimeMillis(); float dt=Math.min(.035f,(now-last)/1000f); last=now; update(dt); postInvalidateDelayed(16); }
         }
         void panel(Canvas c,String a,String b){p.setColor(0xDDFFFFFF);c.drawRoundRect(260,170,640,280,22,22,p);p.setColor(Color.rgb(32,53,68));p.setTextAlign(Paint.Align.CENTER);p.setTypeface(Typeface.create("sans-serif-black",Typeface.BOLD));p.setTextSize(30);c.drawText(a,450,215,p);p.setTextSize(17);p.setTypeface(Typeface.DEFAULT_BOLD);c.drawText(b,450,246,p);p.setTextAlign(Paint.Align.LEFT);}
-        void drawTrajectory(Canvas c){for(int i=1;i<=10;i++){float t=i*.16f;float x=dragX+(slingX-dragX)*3.2f*t;float y=dragY+(slingY-dragY)*3.2f*t+0.5f*430*t*t;p.setColor(0xAAFFFFFF);c.drawCircle(x,y,3,p);}}
+        void drawTrajectory(Canvas c){for(int i=1;i<=12;i++){float t=i*.14f;float x=slingX+(slingX-dragX)*3.25f*t;float y=slingY+(slingY-dragY)*3.25f*t+0.5f*430*t*t;p.setColor(0xAAFFFFFF);c.drawCircle(x,y,3,p);}}
         void drawBird(Canvas c,float x,float y,float r){p.setColor(Color.rgb(226,64,50));c.drawCircle(x,y,r,p);p.setColor(Color.rgb(255,225,198));c.drawOval(x-10,y+4,x+11,y+16,p);p.setColor(Color.WHITE);c.drawCircle(x+5,y-5,7,p);c.drawCircle(x-7,y-5,6,p);p.setColor(Color.rgb(30,35,40));c.drawCircle(x+7,y-5,2.7f,p);c.drawCircle(x-5,y-5,2.5f,p);p.setColor(Color.rgb(255,191,48));Path beak=new Path();beak.moveTo(x+8,y+1);beak.lineTo(x+24,y+5);beak.lineTo(x+8,y+9);beak.close();c.drawPath(beak,p);p.setColor(Color.rgb(65,36,34));p.setStrokeWidth(3);c.drawLine(x-12,y-15,x-1,y-12,p);}
         void drawBody(Canvas c,Body b){if(b.kind==2){p.setColor(Color.rgb(89,170,69));c.drawRoundRect(b.x-b.w/2,b.y-b.h/2,b.x+b.w/2,b.y+b.h/2,10,10,p);p.setColor(Color.WHITE);c.drawCircle(b.x-7,b.y-3,5,p);c.drawCircle(b.x+7,b.y-3,5,p);p.setColor(Color.BLACK);c.drawCircle(b.x-6,b.y-2,2,p);c.drawCircle(b.x+8,b.y-2,2,p);p.setColor(Color.rgb(60,105,48));c.drawOval(b.x-8,b.y+5,b.x+8,b.y+9,p);}else{p.setColor(Color.rgb(192,135,76));c.drawRoundRect(b.x-b.w/2,b.y-b.h/2,b.x+b.w/2,b.y+b.h/2,4,4,p);p.setColor(Color.rgb(234,194,132));p.setStrokeWidth(2);c.drawLine(b.x-b.w/2+3,b.y,b.x+b.w/2-3,b.y,p);}}
         void update(float dt){birdX+=vx*dt;birdY+=vy*dt;vy+=430*dt;
@@ -79,7 +79,7 @@ public class GameActivity extends Activity {
                     if(!flying&&Math.hypot(x-birdX,y-birdY)<65){dragging=true;dragX=x;dragY=y;invalidate();} else if(!flying&&birds<3){setupLevel();}
                     return true;
                 case MotionEvent.ACTION_MOVE: if(dragging){dragX=Math.max(85,Math.min(slingX+18,x));dragY=Math.max(ground-135,Math.min(ground-35,y));birdX=dragX;birdY=dragY;invalidate();}return true;
-                case MotionEvent.ACTION_UP: if(dragging){dragging=false;float dx=slingX-dragX,dy=slingY-dragY;if(Math.hypot(dx,dy)>12){vx=dx*3.25f;vy=dy*3.25f;flying=true;last=System.currentTimeMillis();postInvalidateOnAnimation();}else{birdX=slingX;birdY=slingY;}invalidate();}return true;
+                case MotionEvent.ACTION_UP: if(dragging){dragging=false;float dx=slingX-dragX,dy=slingY-dragY;if(Math.hypot(dx,dy)>12){birdX=slingX;birdY=slingY;vx=dx*3.25f;vy=dy*3.25f;flying=true;last=System.currentTimeMillis();postInvalidateOnAnimation();}else{birdX=slingX;birdY=slingY;}invalidate();}return true;
             }return true;
         }
     }
